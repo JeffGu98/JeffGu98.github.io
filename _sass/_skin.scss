@@ -1,48 +1,59 @@
-/* Reading skin. Paper, song-type notes, a shelf index. */
+/* Single reading column. One sans face, white field, black ink. */
 
-$ink: #1C2420;
-$pine: #1E4D3A;
-$paper: #F3F5F2;
-$rule: #C9D0C8;
-$quiet: #3E4A44;
+$ink: #141414;
+$quiet: #4a4a4a;
+$line: #e6e6e6;
+$measure: 40rem;
 
 body {
-  background: $paper;
+  background: #fff;
   color: $ink;
-  line-height: 1.7;
+  font-family: $sans-serif;
+  line-height: 1.75;
 }
 
 .masthead,
 #main,
-.page__footer {
+.page__footer,
+.breadcrumbs {
   animation: none;
 }
 
 .masthead {
-  background: $paper;
-  border-bottom: 1px solid $rule;
+  background: #fff;
+  border-bottom: 1px solid $line;
   height: $masthead-height;
 
   &__inner-wrap {
-    padding-top: 0.85rem;
-    padding-bottom: 0.85rem;
+    max-width: $measure;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1.25rem;
   }
 }
 
 .masthead__menu-item {
   font-family: $sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 
   &--lg {
-    font-family: $serif;
-    font-weight: 500;
-    font-size: 1.15rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding-right: 1.25rem;
   }
 
   a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    color: $ink;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
   }
 }
 
@@ -52,34 +63,66 @@ body {
 }
 
 #main {
-  margin-top: 1.5rem;
+  max-width: $measure;
+  margin: 2.5rem auto 4rem;
+  padding: 0 1.25rem;
+  float: none;
+  width: auto;
 }
 
-.page__title,
-.archive .page__title {
-  font-family: $serif;
-  font-weight: 500;
-  line-height: 1.3;
+.sidebar {
+  display: none;
+}
+
+.page,
+.archive {
+  float: none;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  left: auto;
+  right: auto;
+}
+
+.page__title {
+  margin: 0 0 1.25rem;
+  font-family: $sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.35;
+  letter-spacing: 0;
   color: $ink;
 }
 
 .page__content,
 .archive {
   h2 {
-    border-bottom: 0;
-    padding-bottom: 0;
-    font-weight: 500;
+    margin-top: 2.25rem;
+    padding: 0;
+    border: 0;
+    font-family: $sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: $ink;
   }
 
   p,
   li {
     font-size: 1.0625rem;
-    line-height: 1.75;
+    line-height: 1.8;
+  }
+
+  a {
+    color: $ink;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
 }
 
 .page__content {
-  max-width: 40rem;
+  max-width: none;
 }
 
 a:focus-visible,
@@ -87,21 +130,23 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid $pine;
+  outline: 2px solid $ink;
   outline-offset: 3px;
 }
 
 .btn {
   min-height: 44px;
-  padding: 0.65em 1.1em;
-  background: $pine;
+  padding: 0.7em 1.15em;
+  background: $ink;
+  color: #fff;
   border-radius: 2px;
   font-family: $sans-serif;
   font-weight: 600;
   transition: background-color 160ms ease;
 
   &:hover {
-    background: #143628;
+    background: #000;
+    color: #fff;
   }
 }
 
@@ -110,6 +155,7 @@ header .page__meta {
 }
 
 .page__date {
+  margin: -0.75rem 0 1rem;
   font-family: $sans-serif;
   font-size: 0.875rem;
   color: $quiet;
@@ -117,38 +163,36 @@ header .page__meta {
   .fa {
     display: none;
   }
-
-  strong {
-    font-weight: 500;
-  }
 }
 
 .archive__item {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid $rule;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid $line;
 }
 
 .archive__item-title {
-  font-family: $serif;
-  font-size: 1.35rem;
-  font-weight: 500;
-  line-height: 1.35;
+  margin: 0;
+  font-family: $sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
 
   a {
     color: $ink;
     text-decoration: none;
+  }
 
-    &:hover {
-      color: $pine;
-    }
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
   }
 }
 
 .archive__item-excerpt {
-  font-family: $sans-serif;
-  color: $quiet;
+  margin: 0.3rem 0 0;
   font-size: 0.95rem;
-  margin-top: 0.25rem;
+  line-height: 1.6;
+  color: $quiet;
 
   p {
     margin: 0;
@@ -156,69 +200,22 @@ header .page__meta {
 }
 
 .archive__subtitle {
-  margin-top: 2.5rem;
-  font-family: $serif;
-  font-size: 1.75rem;
-  color: $ink;
-  border-bottom: 0;
-}
-
-.author__avatar {
-  display: none;
-}
-
-.author__content {
-  display: block;
-  padding: 0;
-}
-
-.sidebar .author__name {
-  font-family: $serif;
-  font-size: 1.35rem;
-  font-weight: 500;
-}
-
-.author__bio {
-  font-family: $sans-serif;
-  color: $quiet;
-  line-height: 1.5;
-}
-
-.author__urls-wrapper .btn {
-  display: none;
-}
-
-.author__urls {
-  display: block;
-  position: static;
-  margin: 0.5rem 0 0;
+  margin: 0 0 0.35rem;
   padding: 0;
   border: 0;
-  background: transparent;
-  box-shadow: none;
-
-  &:before {
-    display: none;
-  }
-
-  a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    color: $ink;
-    text-decoration: none;
-
-    &:hover {
-      color: $pine;
-    }
-  }
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: $ink;
 }
 
 .page__footer {
-  background: transparent;
-  border-top: 1px solid $rule;
+  position: static;
+  float: none;
+  width: 100%;
+  margin-top: 0;
+  background: #fff;
+  border-top: 1px solid $line;
   color: $quiet;
-  animation: none;
 }
 
 .page__footer-follow {
@@ -226,6 +223,9 @@ header .page__meta {
 }
 
 .page__footer-copyright {
+  max-width: $measure;
+  margin-left: auto;
+  margin-right: auto;
   font-family: $sans-serif;
   font-size: 0.875rem;
 }
@@ -233,79 +233,79 @@ header .page__meta {
 .page__taxonomy {
   font-family: $sans-serif;
   font-size: 0.875rem;
+  color: $quiet;
+
+  a {
+    color: $ink;
+  }
 }
 
 .lede {
-  max-width: 38rem;
-  font-size: 1.2rem;
-  line-height: 1.6;
+  margin: 0 0 2rem;
+  max-width: 36rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: $ink;
 }
 
 .shelf-index {
   list-style: none;
-  margin: 2rem 0 2.5rem;
+  margin: 0 0 2.5rem;
   padding: 0;
   border-top: 1px solid $ink;
 }
 
 .shelf-index li {
-  border-bottom: 1px solid $rule;
+  border-bottom: 1px solid $line;
 }
 
 .shelf-index a {
-  display: grid;
-  grid-template-columns: 7rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-  padding: 0.9rem 0;
+  display: block;
+  padding: 1rem 0;
   min-height: 44px;
   color: inherit;
   text-decoration: none;
 }
 
-.shelf-index a:hover .shelf-index__name,
-.shelf-index a:focus-visible .shelf-index__name {
-  color: $pine;
+.shelf-index a:hover .shelf-index__name {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .shelf-index__name {
-  font-family: $serif;
-  font-size: 1.65rem;
-  line-height: 1.2;
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .shelf-index__blurb {
-  font-family: $sans-serif;
+  display: block;
+  margin-top: 0.2rem;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.55;
   color: $quiet;
 }
 
 .section-label {
-  font-family: $sans-serif;
+  margin: 0 0 0.25rem;
   font-size: 0.95rem;
-  font-weight: 600;
-  margin: 2rem 0 0.5rem;
+  font-weight: 700;
 }
 
 .shelf {
   margin-top: 2.75rem;
 }
 
-.shelf__blurb {
-  font-family: $sans-serif;
-  color: $quiet;
-  max-width: 40rem;
-}
-
+.shelf__blurb,
 .shelf__more {
-  font-family: $sans-serif;
+  color: $quiet;
+  font-size: 0.95rem;
 }
 
 .write-form legend {
-  font-family: $serif;
-  font-size: 1.35rem;
-  font-weight: 500;
+  font-size: 1.15rem;
+  font-weight: 700;
   border: 0;
   margin-bottom: 0.75rem;
 }
@@ -328,18 +328,17 @@ header .page__meta {
   gap: 0.7rem;
   align-items: flex-start;
   margin: 0;
-  padding: 0.75rem;
+  padding: 0.8rem;
   min-height: 44px;
-  border: 1px solid $rule;
+  border: 1px solid $line;
   border-radius: 2px;
-  background: transparent;
   cursor: pointer;
 }
 
 .write-form .shelf-choice input {
   display: inline-block;
   width: auto;
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   flex: 0 0 auto;
 }
 
@@ -349,12 +348,11 @@ header .page__meta {
 }
 
 .write-form .shelf-choice strong {
-  font-family: $serif;
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .write-form .shelf-choice small {
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   color: $quiet;
   font-weight: 400;
   line-height: 1.45;
@@ -362,7 +360,7 @@ header .page__meta {
 
 .write-form .shelf-choice:has(input:checked) {
   border-color: $ink;
-  background: #E7EBE6;
+  background: #f6f6f6;
 }
 
 .write-form input[type="text"],
@@ -372,43 +370,36 @@ header .page__meta {
   font-size: 1rem;
   font-family: $sans-serif;
   background: #fff;
-  border: 1px solid $rule;
+  border: 1px solid $line;
   border-radius: 2px;
 }
 
 .write-form textarea {
   min-height: 7rem;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .write-form label small {
   display: block;
-  margin: -0.25rem 0 0.8rem;
+  margin: -0.2rem 0 0.85rem;
   color: $quiet;
 }
 
 #write-status {
   min-height: 1.4em;
-  font-family: $sans-serif;
 }
 
 #write-status.is-error {
-  color: #8E2F2F;
+  color: #9f1239;
 }
 
-@media (max-width: 699px) {
-  .shelf-index a {
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-  }
+pre,
+code {
+  font-size: 0.9rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn,
-  .masthead,
-  #main,
-  .page__footer {
+  .btn {
     transition: none;
-    animation: none;
   }
 }

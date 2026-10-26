@@ -2,7 +2,7 @@
 layout: single
 permalink: /
 title: "互联网上的一粒沙子"
-author_profile: true
+author_profile: false
 redirect_from:
   - /about/
   - /about.html
