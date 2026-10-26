@@ -23,7 +23,7 @@ redirect_from:
 {% endfor %}
 </ol>
 
-<h2 class="section-label">最近</h2>
+<h2 class="section-label">最近写的</h2>
 {% if site.posts.size == 0 %}
 <p>还没有笔记。</p>
 {% else %}
