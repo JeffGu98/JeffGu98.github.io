@@ -14,9 +14,9 @@ en: &DEFAULT_EN
   minute_read                : "minute read"
   share_on_label             : "Share on"
   meta_label                 :
-  tags_label                 : "Tags:"
-  categories_label           : "Categories:"
-  date_label                 : "Published:"
+  tags_label                 : "标签:"
+  categories_label           : "架:"
+  date_label                 : "日期:"
   comments_label             : "Leave a Comment"
   comments_title             : "Comments"
   more_label                 : "Learn More"

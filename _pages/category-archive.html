@@ -1,17 +1,21 @@
 ---
 layout: archive
 permalink: /categories/
-title: "Posts by Category"
+title: "按架"
 author_profile: true
 ---
 
 {% include base_path %}
-{% include group-by-array collection=site.posts field="categories" %}
 
-{% for category in group_names %}
-  {% assign posts = group_items[forloop.index0] %}
-  <h2 id="{{ category | slugify }}" class="archive__subtitle">{{ category }}</h2>
-  {% for post in posts %}
-    {% include archive-single.html %}
-  {% endfor %}
+{% for shelf in site.data.shelves %}
+  {% assign posts = site.categories[shelf.slug] %}
+  <h2 id="{{ shelf.slug }}" class="archive__subtitle">{{ shelf.title }}</h2>
+  <p>{{ shelf.blurb }}</p>
+  {% if posts and posts.size > 0 %}
+    {% for post in posts %}
+      {% include archive-single.html %}
+    {% endfor %}
+  {% else %}
+    <p>这一架还没有笔记。</p>
+  {% endif %}
 {% endfor %}

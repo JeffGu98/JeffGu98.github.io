@@ -5,3 +5,22 @@ permalink: /notebook/
 author_profile: true
 ---
 
+{% include base_path %}
+
+<p>一篇笔记只进一架。从<a href="{{ base_path }}/">首页</a>可以看最近写的，<a href="{{ base_path }}/year-archive/">按时间</a>和<a href="{{ base_path }}/tags/">按标签</a>是另外两条入口。</p>
+
+{% for shelf in site.data.shelves %}
+  <h2 id="{{ shelf.slug }}" class="archive__subtitle">{{ shelf.title }}</h2>
+  <p>{{ shelf.blurb }}</p>
+  {% assign shelf_posts = site.categories[shelf.slug] %}
+  {% if shelf_posts and shelf_posts.size > 0 %}
+    {% for post in shelf_posts limit:5 %}
+      {% include archive-single.html %}
+    {% endfor %}
+    {% if shelf_posts.size > 5 %}
+      <p><a href="{{ base_path }}/categories/#{{ shelf.slug }}">这一架的全部 {{ shelf_posts.size }} 篇</a></p>
+    {% endif %}
+  {% else %}
+    <p>这一架还没有笔记。</p>
+  {% endif %}
+{% endfor %}

@@ -1,0 +1,25 @@
+# 笔记的六架。一篇笔记的 categories 只写一个 slug。
+# 语言和工具不要新建架子，写在标签里。
+- slug: runtime
+  title: 运行时
+  blurb: 程序被执行时发生的事。类型、内存、垃圾回收、线程与 async。先测量，再谈性能。
+
+- slug: craft
+  title: 工艺
+  blurb: 改动如何可重复、可回退。构建与依赖、测试、接口与错误、重构、评审、调试。
+
+- slug: data
+  title: 数据
+  blurb: 状态放在哪里。表与索引、事务、缓存何时变成负担。业务数据和日志指标分开。
+
+- slug: systems
+  title: 系统
+  blurb: 机器和网络。HTTP 与超时重试、Linux 进程与权限、容器、队列、幂等、副本。
+
+- slug: models
+  title: 模型
+  blurb: 模型如何进现有系统。能力边界、检索与工具调用、用任务集评估、成本、延迟、密钥和数据出境。
+
+- slug: sense
+  title: 常识
+  blurb: 不依附某个框架的判断。认证与注入、密钥、读源码和读论文、估算与取舍、把事情写清楚。
