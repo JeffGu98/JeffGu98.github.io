@@ -1,0 +1,414 @@
+/* Reading skin. Paper, song-type notes, a shelf index. */
+
+$ink: #1C2420;
+$pine: #1E4D3A;
+$paper: #F3F5F2;
+$rule: #C9D0C8;
+$quiet: #3E4A44;
+
+body {
+  background: $paper;
+  color: $ink;
+  line-height: 1.7;
+}
+
+.masthead,
+#main,
+.page__footer {
+  animation: none;
+}
+
+.masthead {
+  background: $paper;
+  border-bottom: 1px solid $rule;
+  height: $masthead-height;
+
+  &__inner-wrap {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+}
+
+.masthead__menu-item {
+  font-family: $sans-serif;
+  font-size: 1rem;
+
+  &--lg {
+    font-family: $serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+.greedy-nav button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+#main {
+  margin-top: 1.5rem;
+}
+
+.page__title,
+.archive .page__title {
+  font-family: $serif;
+  font-weight: 500;
+  line-height: 1.3;
+  color: $ink;
+}
+
+.page__content,
+.archive {
+  h2 {
+    border-bottom: 0;
+    padding-bottom: 0;
+    font-weight: 500;
+  }
+
+  p,
+  li {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+}
+
+.page__content {
+  max-width: 40rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid $pine;
+  outline-offset: 3px;
+}
+
+.btn {
+  min-height: 44px;
+  padding: 0.65em 1.1em;
+  background: $pine;
+  border-radius: 2px;
+  font-family: $sans-serif;
+  font-weight: 600;
+  transition: background-color 160ms ease;
+
+  &:hover {
+    background: #143628;
+  }
+}
+
+header .page__meta {
+  display: none;
+}
+
+.page__date {
+  font-family: $sans-serif;
+  font-size: 0.875rem;
+  color: $quiet;
+
+  .fa {
+    display: none;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+.archive__item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid $rule;
+}
+
+.archive__item-title {
+  font-family: $serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.35;
+
+  a {
+    color: $ink;
+    text-decoration: none;
+
+    &:hover {
+      color: $pine;
+    }
+  }
+}
+
+.archive__item-excerpt {
+  font-family: $sans-serif;
+  color: $quiet;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.archive__subtitle {
+  margin-top: 2.5rem;
+  font-family: $serif;
+  font-size: 1.75rem;
+  color: $ink;
+  border-bottom: 0;
+}
+
+.author__avatar {
+  display: none;
+}
+
+.author__content {
+  display: block;
+  padding: 0;
+}
+
+.sidebar .author__name {
+  font-family: $serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.author__bio {
+  font-family: $sans-serif;
+  color: $quiet;
+  line-height: 1.5;
+}
+
+.author__urls-wrapper .btn {
+  display: none;
+}
+
+.author__urls {
+  display: block;
+  position: static;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+
+  &:before {
+    display: none;
+  }
+
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    color: $ink;
+    text-decoration: none;
+
+    &:hover {
+      color: $pine;
+    }
+  }
+}
+
+.page__footer {
+  background: transparent;
+  border-top: 1px solid $rule;
+  color: $quiet;
+  animation: none;
+}
+
+.page__footer-follow {
+  display: none;
+}
+
+.page__footer-copyright {
+  font-family: $sans-serif;
+  font-size: 0.875rem;
+}
+
+.page__taxonomy {
+  font-family: $sans-serif;
+  font-size: 0.875rem;
+}
+
+.lede {
+  max-width: 38rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.shelf-index {
+  list-style: none;
+  margin: 2rem 0 2.5rem;
+  padding: 0;
+  border-top: 1px solid $ink;
+}
+
+.shelf-index li {
+  border-bottom: 1px solid $rule;
+}
+
+.shelf-index a {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.shelf-index a:hover .shelf-index__name,
+.shelf-index a:focus-visible .shelf-index__name {
+  color: $pine;
+}
+
+.shelf-index__name {
+  font-family: $serif;
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+.shelf-index__blurb {
+  font-family: $sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: $quiet;
+}
+
+.section-label {
+  font-family: $sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 2rem 0 0.5rem;
+}
+
+.shelf {
+  margin-top: 2.75rem;
+}
+
+.shelf__blurb {
+  font-family: $sans-serif;
+  color: $quiet;
+  max-width: 40rem;
+}
+
+.shelf__more {
+  font-family: $sans-serif;
+}
+
+.write-form legend {
+  font-family: $serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  border: 0;
+  margin-bottom: 0.75rem;
+}
+
+.shelf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 700px) {
+  .shelf-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.write-form .shelf-choice {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.75rem;
+  min-height: 44px;
+  border: 1px solid $rule;
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.write-form .shelf-choice input {
+  display: inline-block;
+  width: auto;
+  margin-top: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.write-form .shelf-choice strong,
+.write-form .shelf-choice small {
+  display: block;
+}
+
+.write-form .shelf-choice strong {
+  font-family: $serif;
+  font-size: 1.15rem;
+}
+
+.write-form .shelf-choice small {
+  margin-top: 0.2rem;
+  color: $quiet;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.write-form .shelf-choice:has(input:checked) {
+  border-color: $ink;
+  background: #E7EBE6;
+}
+
+.write-form input[type="text"],
+.write-form input[type="password"],
+.write-form textarea {
+  min-height: 44px;
+  font-size: 1rem;
+  font-family: $sans-serif;
+  background: #fff;
+  border: 1px solid $rule;
+  border-radius: 2px;
+}
+
+.write-form textarea {
+  min-height: 7rem;
+  line-height: 1.5;
+}
+
+.write-form label small {
+  display: block;
+  margin: -0.25rem 0 0.8rem;
+  color: $quiet;
+}
+
+#write-status {
+  min-height: 1.4em;
+  font-family: $sans-serif;
+}
+
+#write-status.is-error {
+  color: #8E2F2F;
+}
+
+@media (max-width: 699px) {
+  .shelf-index a {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .masthead,
+  #main,
+  .page__footer {
+    transition: none;
+    animation: none;
+  }
+}
