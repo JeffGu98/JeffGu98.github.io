@@ -1,0 +1,260 @@
+---
+layout: single
+title: "写笔记"
+permalink: /write/
+author_profile: true
+---
+
+{% include base_path %}
+
+<p>选一架，写完发布。这篇会出现在<a href="{{ base_path }}/notebook/">笔记</a>里对应的那一架下面。</p>
+
+<form id="write-form" class="write-form" data-repo="{{ site.repository }}" data-site="{{ site.url }}">
+  <fieldset>
+    <legend>放在哪一架</legend>
+    <div class="shelf-grid">
+      {% for shelf in site.data.shelves %}
+      <label class="shelf-choice">
+        <input type="radio" name="shelf" value="{{ shelf.slug }}"{% if forloop.first %} checked{% endif %}>
+        <span>
+          <strong>{{ shelf.title }}</strong>
+          <small>{{ shelf.blurb }}</small>
+        </span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  <label>标题
+    <input type="text" name="title" required maxlength="120" placeholder="这篇笔记回答的那个问题">
+  </label>
+
+  <label>短名
+    <input type="text" name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="jvm-full-gc" autocapitalize="off" spellcheck="false">
+    <small>只用小写英文、数字和短横线。网址会是 /这一架/短名/。</small>
+  </label>
+
+  <label>标签
+    <input type="text" name="tags" placeholder="java, jvm">
+    <small>语言和工具写在这里，用逗号分开。例如 java、python、llm。</small>
+  </label>
+
+  <label>一句话摘要
+    <input type="text" name="excerpt" maxlength="160" placeholder="这篇能回答什么">
+  </label>
+
+  <label>问题
+    <textarea name="problem" required rows="4" placeholder="当时卡在哪里"></textarea>
+  </label>
+
+  <label>结论
+    <textarea name="conclusion" required rows="4" placeholder="现在相信的答案"></textarea>
+  </label>
+
+  <label>依据
+    <textarea name="evidence" required rows="5" placeholder="跑过的命令、读过的代码，或一个最小例子"></textarea>
+  </label>
+
+  <label>还不确定
+    <textarea name="unknown" rows="3" placeholder="还没验证的边界和版本"></textarea>
+  </label>
+
+  <label>GitHub token
+    <input type="password" name="token" autocomplete="off" required placeholder="ghp_ 或 github_pat_">
+    <small>只保存在这台浏览器里，不会写进笔记。<a href="https://github.com/settings/tokens/new?scopes=public_repo&amp;description=写笔记">生成一个 token</a>，勾选 <code>public_repo</code>。</small>
+  </label>
+
+  <p>
+    <button type="submit" class="btn">发布到这一架</button>
+  </p>
+  <p id="write-status" role="status"></p>
+</form>
+
+<style>
+  .write-form legend {
+    font-size: 1.1em;
+    font-weight: 700;
+    border-bottom: 0;
+    margin-bottom: 0.6em;
+  }
+  .shelf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6em;
+    margin-bottom: 1.2em;
+  }
+  @media (max-width: 600px) {
+    .shelf-grid { grid-template-columns: 1fr; }
+  }
+  .write-form .shelf-choice {
+    display: flex;
+    gap: 0.55em;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0.7em 0.75em;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .write-form .shelf-choice input {
+    display: inline-block;
+    width: auto;
+    margin-top: 0.25em;
+    flex: 0 0 auto;
+  }
+  .write-form .shelf-choice span {
+    display: block;
+  }
+  .write-form .shelf-choice strong,
+  .write-form .shelf-choice small {
+    display: block;
+  }
+  .write-form .shelf-choice small {
+    margin-top: 0.2em;
+    color: #555;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .write-form .shelf-choice:has(input:checked) {
+    border-color: #2c2f33;
+    background: #f4f5f6;
+  }
+  .write-form .shelf-choice:has(input:focus-visible) {
+    outline: 2px solid #2c2f33;
+    outline-offset: 2px;
+  }
+  .write-form textarea {
+    min-height: 6em;
+  }
+  #write-status {
+    min-height: 1.4em;
+  }
+  #write-status.is-error {
+    color: #8b1e1e;
+  }
+</style>
+
+<script>
+(function () {
+  var form = document.getElementById("write-form");
+  var status = document.getElementById("write-status");
+  var tokenInput = form.elements.token;
+  var TOKEN_KEY = "jeffgu98-notes-token";
+  var saved = "";
+  try { saved = localStorage.getItem(TOKEN_KEY) || ""; } catch (e) {}
+  if (saved) tokenInput.value = saved;
+
+  function yamlString(value) {
+    return JSON.stringify(String(value).replace(/\r\n/g, "\n").trim());
+  }
+
+  function utf8ToBase64(value) {
+    var bytes = new TextEncoder().encode(value);
+    var binary = "";
+    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    return btoa(binary);
+  }
+
+  function setStatus(message, isError) {
+    status.className = isError ? "is-error" : "";
+    status.textContent = "";
+    if (typeof message === "string") {
+      status.textContent = message;
+      return;
+    }
+    status.appendChild(message);
+  }
+
+  function noteBody(name, value) {
+    var text = String(value || "").replace(/\r\n/g, "\n").trim();
+    return "## " + name + "\n\n" + (text || "无。") + "\n";
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var data = new FormData(form);
+    var shelf = data.get("shelf");
+    var title = String(data.get("title") || "").trim();
+    var slug = String(data.get("slug") || "").trim().toLowerCase();
+    var excerpt = String(data.get("excerpt") || "").trim();
+    var token = String(data.get("token") || "").trim();
+    var tags = String(data.get("tags") || "").split(/[,，]/).map(function (tag) {
+      return tag.trim();
+    }).filter(Boolean);
+
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+      setStatus("短名只能用小写英文、数字和短横线。", true);
+      return;
+    }
+    if (!token) {
+      setStatus("先填 GitHub token。", true);
+      return;
+    }
+
+    var now = new Date();
+    var date = now.getFullYear() + "-"
+      + String(now.getMonth() + 1).padStart(2, "0") + "-"
+      + String(now.getDate()).padStart(2, "0");
+    var filename = date + "-" + slug + ".md";
+    var tagBlock = tags.length
+      ? tags.map(function (tag) { return "  - " + yamlString(tag); }).join("\n") + "\n"
+      : "";
+    var markdown = "---\n"
+      + "title: " + yamlString(title) + "\n"
+      + "date: " + date + "\n"
+      + "categories:\n  - " + shelf + "\n"
+      + "tags:\n" + tagBlock
+      + "excerpt: " + yamlString(excerpt || title) + "\n"
+      + "---\n\n"
+      + noteBody("问题", data.get("problem")) + "\n"
+      + noteBody("结论", data.get("conclusion")) + "\n"
+      + noteBody("依据", data.get("evidence")) + "\n"
+      + noteBody("还不确定", data.get("unknown"));
+
+    var button = form.querySelector("button");
+    button.disabled = true;
+    setStatus("正在发布…");
+
+    var repo = form.getAttribute("data-repo");
+    var endpoint = "https://api.github.com/repos/" + repo + "/contents/_posts/" + filename;
+    fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "添加笔记：" + title,
+        content: utf8ToBase64(markdown),
+        branch: "main"
+      })
+    }).then(function (response) {
+      if (response.status === 401) throw new Error("token 无效，或没有这个仓库的写权限。");
+      if (response.status === 422) throw new Error("这个短名今天已经用过，换一个。");
+      if (!response.ok) throw new Error("发布失败（" + response.status + "）。");
+      return response.json();
+    }).then(function () {
+      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+      ["title", "slug", "tags", "excerpt", "problem", "conclusion", "evidence", "unknown"].forEach(function (name) {
+        form.elements[name].value = "";
+      });
+      var site = form.getAttribute("data-site").replace(/\/$/, "");
+      var link = document.createElement("a");
+      link.href = site + "/" + shelf + "/" + slug + "/";
+      link.textContent = "打开这篇笔记";
+      var line = document.createElement("span");
+      line.textContent = "已发布。一两分钟后才会出现在网站上。";
+      status.className = "";
+      status.textContent = "";
+      status.appendChild(line);
+      status.appendChild(document.createTextNode(" "));
+      status.appendChild(link);
+    }).catch(function (error) {
+      setStatus(error.message || "发布没有发出去。", true);
+    }).then(function () {
+      button.disabled = false;
+    });
+  });
+})();
+</script>

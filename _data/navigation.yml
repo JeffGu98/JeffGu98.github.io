@@ -8,6 +8,9 @@ main:
   - title: "笔记"
     url: /notebook/
 
+  - title: "写笔记"
+    url: /write/
+
   # - title: "Talks"
   #   url: /talks/    
 
